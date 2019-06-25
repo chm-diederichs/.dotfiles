@@ -1,0 +1,18 @@
+[user]
+    name = Christophe Diederichs
+    email = chris.d.itunes@gmail.com
+[github]
+    user = chm-diederichs
+[alias]
+    a = add
+    ca = commit -a
+    cm = commit -m
+    cam = commit -am
+    s = status
+    pom = push origin master
+    pog = push origin gh-pages
+    puom = pull origin master
+    puog = pull origin gh-pages
+    cob = checkout -b
+[credential]
+    helper = osxkeychain
