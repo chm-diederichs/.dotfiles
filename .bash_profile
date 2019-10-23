@@ -4,7 +4,7 @@ export LSCOLORS="exfxcxdxbxegedabagacad"
 export CLICOLOR=1
 
 export LC_ALL="en_AU.UTF-8"
-export LANG="en_AU.UTF-8"
+export LANG="en_GB.UTF-8"
 
 # Larger bash history (allow 2^17 entries; default is 500)
 export HISTSIZE=131072;
@@ -29,22 +29,40 @@ export MANPAGER="less -X";
 PATH="/Library/Frameworks/Python.framework/Versions/3.5/bin:${PATH}"
 export PATH
 
+# Enable some Bash 4 features when possible:
+# * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
+# * Recursive globbing, e.g. `echo **/*.txt`
+# * Case-insensitive globbing (used in pathname expansion)
+for option in autocd globstar nocaseglob histappend cdspell; do
+   shopt -s "$option" 2> /dev/null;
+done;
+
+# Bind history search to up and down arrows
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
+
+# Case-insensitive tab completion
+bind "set completion-ignore-case on"
+
 # added by Anaconda2 5.1.0 installer
 export PATH="/anaconda2/bin:$PATH"
 
 # added by Anaconda3 5.1.0 installer
 export PATH="/anaconda3/bin:$PATH"
 
+# Print options if ambigious, prevents having to tab twice
+bind "set show-all-if-ambiguous on"
+
 export GOPATH=~/gocode
 export PATH=$PATH:$GOPATH/bin
 
-export BITSTEIND_DIR="$HOME/lightning-test-container/.bitcoin"
+export BITCOIN_TEST_DIR="$HOME/lightning-test/.bitcoin"
 
-alias bitsteind="bitcoind -datadir=$BITSTEIND_DIR"
-alias bitstein-cli="bitcoin-cli -datadir=$BITSTEIND_DIR"
+alias regtestd="bitcoind -datadir=$BITCOIN_TEST_DIR -deprecatedrpc=generate"
+alias regtest-cli="bitcoin-cli -datadir=$BITCOIN_TEST_DIR"
 
-export LND1_DIR="$HOME/lightning-test-container/.lnd"
-export LND2_DIR="$HOME/lightning-test-container/.lnd2"
+export LND1_DIR="$HOME/lightning-test/.lnd1"
+export LND2_DIR="$HOME/lightning-test/.lnd2"
 
 alias lnd1="lnd --lnddir=$LND1_DIR";
 alias lncli1="lncli -n regtest --lnddir=$LND1_DIR"
@@ -61,3 +79,9 @@ test -r /Users/christophediederichs/.opam/opam-init/init.sh && . /Users/christop
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+. /usr/local/etc/profile.d/z.sh
+alias albums="echo >> $HOME/Documents/albums.txt"
+alias python=python3
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
